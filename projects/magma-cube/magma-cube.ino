@@ -18,9 +18,9 @@
 #define BRIGHTNESS  180       // 0-255, keep under 200 for USB power
 
 // ── Fire tuning ─────────────────────────────────────────────────────
-#define COOLING     80        // How quickly the heat cools down (higher = faster)
-#define SPARKING    160       // Chance (out of 255) of a new spark each frame
-#define FRAMES_PER_SECOND 60
+#define COOLING     35        // How quickly the heat cools down (higher = faster)
+#define SPARKING    80        // Chance (out of 255) of a new spark each frame
+#define FRAMES_PER_SECOND 40
 
 CRGB leds[NUM_LEDS];
 byte heat[NUM_LEDS];          // Per-pixel heat value
@@ -68,12 +68,12 @@ void fire() {
   // 3) Randomly ignite new sparks near the bottom / random positions
   if (random8() < SPARKING) {
     int pos = random8(3);           // spark in first few pixels
-    heat[pos] = qadd8(heat[pos], random8(160, 255));
+    heat[pos] = qadd8(heat[pos], random8(100, 180));
   }
   // Extra: occasional spark anywhere on the ring for magma bubbling effect
-  if (random8() < SPARKING / 3) {
+  if (random8() < SPARKING / 4) {
     int pos = random8(NUM_LEDS);
-    heat[pos] = qadd8(heat[pos], random8(100, 200));
+    heat[pos] = qadd8(heat[pos], random8(60, 140));
   }
 
   // 4) Map heat to palette colours
