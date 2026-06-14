@@ -3,10 +3,20 @@
 // Running on Arduino Nano ESP32 (ABX00083 / arduino:esp32:nano_nora)
 //
 // Wiring:
-//   Ring DIN  -> GPIO D2 (default DATA_PIN below)
-//   Ring VCC  -> 5 V
+//   Ring DIN  -> GPIO D2 (default DATA_PIN below), through a 330R resistor
+//   Ring VCC  -> 3V3   (see power note below)
 //   Ring GND  -> GND
-//   (A 300-470 ohm resistor on DIN and a 100 uF cap across VCC/GND recommended)
+//   (A 100 uF cap across the ring's VCC/GND is also recommended)
+//
+// Power note (Arduino Nano ESP32):
+//   This board has NO 5V pin. 5V is only on VBUS (USB power). The GPIOs
+//   are 3.3V logic, and a WS2812B powered at 5V wants a data "high" of
+//   ~0.7*VDD (~3.7V), so a 3.3V signal is marginal and the ring may not
+//   light. Powering the ring from 3V3 drops that threshold so the 3.3V
+//   data is read reliably (slightly dimmer). For full 5V brightness use
+//   VBUS plus a logic-level shifter (e.g. 74AHCT125) on the data line.
+//
+//   The onboard LED blinks ~1 Hz as a "sketch is running" heartbeat.
 
 #include <FastLED.h>
 
@@ -39,6 +49,7 @@ CRGBPalette16 magmaPalette = magma_gp;
 // ─────────────────────────────────────────────────────────────────────
 void setup() {
   delay(1000);                // power-on safety delay
+  pinMode(LED_BUILTIN, OUTPUT);   // onboard LED = "sketch is running" heartbeat
   FastLED.addLeds<LED_TYPE, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS)
          .setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(BRIGHTNESS);
@@ -48,6 +59,15 @@ void setup() {
 void loop() {
   fire();
   FastLED.show();
+
+  // Heartbeat: blink the onboard LED ~1 Hz so we can always tell the
+  // sketch is running, independent of the ring.
+  static uint8_t frame = 0;
+  if (++frame >= FRAMES_PER_SECOND / 2) {
+    frame = 0;
+    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+  }
+
   FastLED.delay(1000 / FRAMES_PER_SECOND);
 }
 
