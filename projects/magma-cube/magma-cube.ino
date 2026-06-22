@@ -21,16 +21,16 @@
 #include <FastLED.h>
 
 // ── Hardware config ─────────────────────────────────────────────────
-#define DATA_PIN    D2
+#define DATA_PIN    D3
 #define NUM_LEDS    7
 #define LED_TYPE    WS2812B
 #define COLOR_ORDER GRB
 #define BRIGHTNESS  180       // 0-255, keep under 200 for USB power
 
 // ── Fire tuning ─────────────────────────────────────────────────────
-#define COOLING     35        // How quickly the heat cools down (higher = faster)
-#define SPARKING    80        // Chance (out of 255) of a new spark each frame
-#define FRAMES_PER_SECOND 40
+#define COOLING     22        // How quickly the heat cools down (lower = slower, more sustained glow)
+#define SPARKING    110       // Chance (out of 255) of a new spark each frame (higher = fewer dark lulls)
+#define FRAMES_PER_SECOND 30  // Overall animation speed (lower = slower motion)
 
 CRGB leds[NUM_LEDS];
 byte heat[NUM_LEDS];          // Per-pixel heat value

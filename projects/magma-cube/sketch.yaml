@@ -1,2 +1,4 @@
-default_fqbn: arduino:esp32:nano_nora
+# PinNumbers=byGPIONumber is REQUIRED: in the default "By Arduino pin" mode,
+# FastLED/NeoPixel drive the wrong GPIO and the ring stays dark. See README.
+default_fqbn: arduino:esp32:nano_nora:PinNumbers=byGPIONumber
 default_port: ""

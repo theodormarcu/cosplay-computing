@@ -8,11 +8,12 @@
 //   LED4 = RED, LED5 = GREEN, LED6 = BLUE
 //
 // Wiring (same as magma-cube):
-//   Ring DIN -> D2 (through ~330R), VCC -> 3V3, GND -> GND
+//   Ring DIN -> D3, VCC -> 3V3, GND -> GND
+//   Compile with PinNumbers=byGPIONumber (see sketch.yaml) or the ring stays dark.
 
 #include <FastLED.h>
 
-#define DATA_PIN    D2
+#define DATA_PIN    D3
 #define NUM_LEDS    7
 #define LED_TYPE    WS2812B
 #define COLOR_ORDER GRB
