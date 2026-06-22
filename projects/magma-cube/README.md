@@ -79,11 +79,25 @@ Edit these `#define` values in `magma-cube.ino`:
 
 | Define | Default | Description |
 |--------|---------|-------------|
-| `COOLING` | 22 | How fast heat dissipates (lower = slower, more sustained glow) |
-| `SPARKING` | 110 | Chance of new sparks per frame, 0-255 (higher = fewer dark lulls) |
-| `FRAMES_PER_SECOND` | 30 | Overall animation speed (lower = slower motion) |
+| `COOLING` | 70 | How fast heat dissipates (higher = more contrast/flicker, more dramatic) |
+| `SPARKING` | 70* | Chance of new sparks per frame, 0-255 (higher = busier, fewer dark lulls) |
+| `FRAMES_PER_SECOND` | 15 | Overall animation speed (lower = slower motion) |
 | `BRIGHTNESS` | 180 | Overall LED brightness (keep under 200 for USB power) |
 | `DATA_PIN` | D3 | Pin connected to ring DIN |
+
+The palette is **red-dominant**: most of the heat range glows red, with orange/yellow
+only on the hottest spark tips (no white — it reads "cold"). Edit `magma_gp` to retune.
+
+### Ring-size variants
+
+Same effect, different `NUM_LEDS` (and `SPARKING`* scaled to ring size). Flash the one
+matching your ring:
+
+| Project | LEDs | `SPARKING` |
+|---------|------|------------|
+| `magma-cube/` (this) | 7 | 70 |
+| `../magma-ring-12/` | 12 | 105 |
+| `../magma-ring-16/` | 16 | 140 |
 
 ## Troubleshooting
 

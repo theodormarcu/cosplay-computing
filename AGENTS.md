@@ -27,6 +27,8 @@ arduino-cli upload  --fqbn "arduino:esp32:nano_nora:PinNumbers=byGPIONumber" -p 
 cosplay-computing/
   projects/
     magma-cube/    # 7-LED WS2812B fire animation on Nano ESP32 (data on D3)
+    magma-ring-12/ # Same effect for a 12-LED ring
+    magma-ring-16/ # Same effect for a 16-LED ring
     ledtest/       # Diagnostic: static R/G/B/W per-pixel pattern + heartbeat (FastLED)
     neotest/       # Diagnostic: same pattern via Adafruit NeoPixel (library cross-check)
     d2test/        # Diagnostic: slow data-pin toggle to verify the pin w/ multimeter

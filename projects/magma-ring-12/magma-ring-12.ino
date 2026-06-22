@@ -1,6 +1,9 @@
-// magma-cube.ino
-// Flaming / magma animation for a 7-LED WS2812B ring (DIYmall 7-bit)
+// magma-ring-12.ino
+// Flaming / magma animation for a 12-LED WS2812B ring.
 // Running on Arduino Nano ESP32 (ABX00083 / arduino:esp32:nano_nora)
+//
+// Identical to magma-cube.ino except NUM_LEDS (12) and a slightly higher
+// SPARKING so the larger ring stays lively.
 //
 // Wiring:
 //   Ring DIN  -> GPIO D3 (DATA_PIN below); optional 330R resistor in series
@@ -9,7 +12,7 @@
 //   (A 100 uF cap across the ring's VCC/GND is also recommended)
 //
 // IMPORTANT: compile with PinNumbers=byGPIONumber (set in sketch.yaml) or
-// FastLED drives the wrong GPIO and the ring stays dark. See README.
+// FastLED drives the wrong GPIO and the ring stays dark. See magma-cube/README.
 //
 // Power note (Arduino Nano ESP32):
 //   This board has NO 5V pin. 5V is only on VBUS (USB power). The GPIOs
@@ -25,14 +28,14 @@
 
 // ── Hardware config ─────────────────────────────────────────────────
 #define DATA_PIN    D3
-#define NUM_LEDS    7
+#define NUM_LEDS    12
 #define LED_TYPE    WS2812B
 #define COLOR_ORDER GRB
 #define BRIGHTNESS  180       // 0-255, keep under 200 for USB power
 
 // ── Fire tuning ─────────────────────────────────────────────────────
 #define COOLING     70        // How quickly the heat cools down (higher = more contrast/flicker)
-#define SPARKING    70        // Chance (out of 255) of a new spark each frame (higher = fewer dark lulls)
+#define SPARKING    105       // Chance (out of 255) of a new spark each frame (higher = fewer dark lulls)
 #define FRAMES_PER_SECOND 15  // Overall animation speed (lower = slower motion)
 
 CRGB leds[NUM_LEDS];
@@ -76,7 +79,7 @@ void loop() {
   FastLED.delay(1000 / FRAMES_PER_SECOND);
 }
 
-// Adapted Fire2012 for a tiny 7-pixel ring
+// Adapted Fire2012 for a small WS2812B ring
 void fire() {
   // 1) Cool each cell a little
   for (int i = 0; i < NUM_LEDS; i++) {
